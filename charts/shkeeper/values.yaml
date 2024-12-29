@@ -2,17 +2,46 @@
 # General
 #
 
-namespace: shkeeper
+namespace: shkeeper-testdb
 external_ip: 0.0.0.0
 
 dev:
   imagePullSecrets:
 
-storageClassName:
+storageClassName: longhorn
 
-mariadb: 
-  storage:
-    size: 10Gi
+mariadb:
+  enabled: true
+  architecture: standalone
+  auth:
+    username: "shkeeper"
+    password: "shkeeper"
+    rootPassword: "shkeeper"
+  initdbScriptsConfigMap: mariadb-docker-entrypoint-initdb-d
+  primary:
+    service:
+      ports:
+        mysql: 3306
+    resources:
+      limits:
+        cpu: 2
+        memory: 2Gi
+      requests:
+        cpu: 100m
+        memory: 200Mi
+    persistence:
+      enabled: true
+      accessModes: ["ReadWriteOnce"]
+      storageClass: longhorn
+      size: 10Gi
+  # initdbScripts:
+  #   create_db.sql: |-
+  #     CREATE DATABASE IF NOT EXISTS `shkeeper`;
+  #     CREATE DATABASE IF NOT EXISTS `ethereum-shkeeper`;
+  #     CREATE DATABASE IF NOT EXISTS `bnb-shkeeper`;
+  #     CREATE DATABASE IF NOT EXISTS `xrp-shkeeper`;
+  #     CREATE DATABASE IF NOT EXISTS `polygon-shkeeper`;
+  #     CREATE DATABASE IF NOT EXISTS `avalanche-shkeeper`;
 
 #
 # Shkeeper
@@ -29,7 +58,7 @@ shkeeper:
 #
 
 btc:
-  enabled: true
+  enabled: false
   mainnet: true
   bitcoind:
     image: vsyshost/bitcoind:27.0
@@ -38,12 +67,12 @@ btc:
 
 
 ltc:
-  enabled: true
+  enabled: false
   mainnet: true
   storage:
     size: 15Gi
 doge:
-  enabled: true
+  enabled: false
   mainnet: true
   storage:
     size: 15Gi
