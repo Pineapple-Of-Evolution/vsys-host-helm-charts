@@ -4,7 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: bnb-shkeeper
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace | quote }}
   labels:
     app: bnb-shkeeper
 spec:

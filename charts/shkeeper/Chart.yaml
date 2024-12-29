@@ -10,4 +10,3 @@ dependencies:
     version: 20.2.1
     repository: https://charts.bitnami.com/bitnami
     condition: mariadb.enabled
-    namespace: shkeeper-testdb

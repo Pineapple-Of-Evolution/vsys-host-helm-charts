@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: shkeeper-db-claim
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace | quote }}
 spec:
   storageClassName: {{ .Values.storageClassName }}
   accessModes:

@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: monero-wallet-rpc
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace | quote }}
   labels:
     app: monero-wallet-rpc
 spec:
